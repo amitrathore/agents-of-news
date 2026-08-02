@@ -12,7 +12,8 @@ Open `http://localhost:8000`.
 
 ## Project structure
 
-- `index.html` — page content and accessible structure
+- `index.html` — primary page content and accessible structure
+- `profiles.html` — local archive of the featured agent profiles
 - `styles.css` — responsive visual system and layout
 - `script.js` — mobile navigation, local launch-brief generation, and the dynamic footer year
 - `assets/` — all imagery and brand artwork, stored locally
