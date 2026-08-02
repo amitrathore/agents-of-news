@@ -2,6 +2,8 @@
 
 A self-contained static redesign of Agents of News, built for GitHub Pages.
 
+Production: [www.agentsofnews.com](https://www.agentsofnews.com/)
+
 ## Local preview
 
 ```bash
