@@ -147,6 +147,34 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
 .business-image { position: relative; }
 .business-image::before { content: ""; position: absolute; inset: -20px 20px 20px -20px; z-index: -1; border: 1px solid var(--coral); }
 
+.plans-section { padding-block: 150px; background: var(--paper-deep); }
+.plans-intro { display: grid; grid-template-columns: 1.15fr .85fr; gap: 70px; align-items: end; margin-bottom: 92px; }
+.plans-intro .eyebrow { grid-column: 1 / -1; }
+.plans-intro h2 { max-width: 760px; margin-bottom: 0; }
+.plans-intro > .plans-summary { max-width: 520px; margin-bottom: 8px; color: var(--ink-soft); font-size: 17px; }
+.plans-intro strong { color: var(--coral); }
+.plan-ledger { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+.plan-option { display: flex; min-height: 450px; flex-direction: column; padding: 38px 34px 34px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); background: var(--paper); }
+.plan-option-featured { position: relative; z-index: 2; border-color: var(--ink); background: var(--ink); color: white; box-shadow: 12px 12px 0 var(--coral); transform: translateY(-18px); }
+.plan-name { min-height: 48px; margin-bottom: 28px; color: var(--coral); font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.plan-price { margin-bottom: 32px; font-family: var(--serif); font-size: clamp(72px, 8vw, 112px); font-weight: 700; letter-spacing: -.065em; line-height: .76; }
+.plan-price span { margin-right: 4px; color: var(--cyan); font-family: var(--sans); font-size: .28em; letter-spacing: 0; vertical-align: top; }
+.plan-option > .plan-description { color: var(--ink-soft); }
+.plan-option-featured > .plan-description { color: rgba(255,255,255,.68); }
+.plan-action { width: 100%; min-width: 0; margin-top: auto; }
+.enterprise-offer { display: grid; grid-template-columns: 1fr 1.2fr auto; gap: 56px; align-items: end; margin-top: 76px; padding-top: 52px; border-top: 1px solid var(--ink); }
+.enterprise-offer h3 { max-width: 460px; margin-bottom: 0; font-size: clamp(34px, 4vw, 52px); }
+.enterprise-offer > p { max-width: 540px; margin-bottom: 0; color: var(--ink-soft); }
+.enterprise-offer .button { min-width: 260px; }
+
+.news-contact { padding-block: 112px; background: var(--signal); }
+.news-contact-grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: 90px; align-items: center; }
+.news-contact-art { position: relative; width: min(100%, 360px); padding: 14px; border: 1px solid var(--ink); background: var(--cyan); box-shadow: -14px 14px 0 var(--coral); transform: rotate(-2deg); }
+.news-contact-art img { aspect-ratio: 269 / 206; object-fit: cover; }
+.news-contact-copy h2 { margin-bottom: 30px; }
+.news-contact-copy > p:not(.eyebrow) { max-width: 720px; font-family: var(--serif); font-size: clamp(23px, 2.4vw, 34px); line-height: 1.2; }
+.news-contact-copy a { border-bottom: 2px solid var(--ink); font-weight: 700; }
+
 .builder-section { padding-block: 130px; border-top: 1px solid rgba(255,255,255,.2); background: var(--ink); color: white; }
 .builder-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 80px; }
 .builder-intro { position: sticky; top: 120px; align-self: start; }
@@ -194,13 +222,15 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .hero-visual { width: min(80%, 650px); margin: 40px auto 0; }
   .income-note { grid-template-columns: auto 1fr; width: 100%; }
   .income-note small { grid-column: 2; }
-  .section-heading, .economy-intro { grid-template-columns: 1fr; gap: 24px; }
+  .section-heading, .economy-intro, .plans-intro { grid-template-columns: 1fr; gap: 24px; }
   .economy-intro .eyebrow { grid-column: auto; }
   .agent-card { grid-template-columns: 130px 1fr; }
   .agent-card-featured { grid-template-columns: 260px 1fr; }
   .launch-section, .business-section { gap: 50px; }
   .earning-list li { grid-template-columns: 60px 1fr; }
   .earning-list li > strong { grid-column: 2; }
+  .enterprise-offer { grid-template-columns: 1fr 1fr; }
+  .enterprise-offer .button { grid-column: 2; }
 }
 
 @media (max-width: 720px) {
@@ -219,12 +249,20 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .income-note { position: static; grid-template-columns: 1fr; width: 100%; margin-top: 85px; }
   .income-note small { grid-column: auto; }
-  .agents-section, .economy-section { padding-block: 88px; }
+  .agents-section, .economy-section, .plans-section { padding-block: 88px; }
   .section-heading { margin-bottom: 46px; }
   .agent-grid { grid-template-columns: 1fr; }
   .agent-card, .agent-card-featured { grid-column: auto; grid-template-columns: 112px 1fr; padding: 18px; }
   .agent-card-featured .agent-copy > p:not(.agent-field) { font-size: 13px; }
   .launch-section, .business-section { grid-template-columns: 1fr; padding-block: 100px; }
+  .plan-ledger { grid-template-columns: 1fr; }
+  .plan-option { min-height: 0; }
+  .plan-option-featured { box-shadow: 8px 8px 0 var(--coral); transform: none; }
+  .plan-name { min-height: 0; }
+  .plan-action { margin-top: 28px; }
+  .enterprise-offer, .news-contact-grid { grid-template-columns: 1fr; gap: 38px; }
+  .enterprise-offer .button { grid-column: 1; }
+  .news-contact-art { width: min(78%, 360px); margin-inline: auto; }
   .builder-grid { grid-template-columns: 1fr; gap: 46px; }
   .builder-intro { position: static; }
   .brief-result { grid-column: 1; }
