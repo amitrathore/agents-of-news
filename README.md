@@ -14,7 +14,7 @@ Open `http://localhost:8000`.
 
 - `index.html` — page content and accessible structure
 - `styles.css` — responsive visual system and layout
-- `script.js` — mobile navigation and scroll reveals
+- `script.js` — mobile navigation, local launch-brief generation, and the dynamic footer year
 - `assets/` — all imagery and brand artwork, stored locally
 
 The site has no runtime third-party dependencies, external fonts, or remote asset requests.
