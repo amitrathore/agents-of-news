@@ -5,7 +5,62 @@ const briefResult = document.getElementById('brief-result');
 const briefTitle = document.getElementById('brief-title');
 const briefOutput = document.getElementById('brief-output');
 const briefDownload = document.getElementById('brief-download');
+const tallyEmbed = document.querySelector('[data-tally-src]');
 let briefUrl;
+
+if (tallyEmbed) {
+  let fallbackTimer;
+  let heightObserver;
+
+  const isTallySized = () => Number.parseFloat(tallyEmbed.style.height) > 200;
+
+  const showTallyFallback = () => {
+    if (!tallyEmbed.dataset.tallySrc) return;
+    clearTimeout(fallbackTimer);
+    heightObserver?.disconnect();
+    const fallbackUrl = new URL(tallyEmbed.dataset.tallySrc);
+    fallbackUrl.searchParams.delete('dynamicHeight');
+    tallyEmbed.src = fallbackUrl.toString();
+    tallyEmbed.removeAttribute('data-tally-src');
+    tallyEmbed.height = '1600';
+    tallyEmbed.scrolling = 'auto';
+  };
+
+  const loadTallyEmbed = () => {
+    if (!tallyEmbed.dataset.tallySrc) return;
+    try {
+      if (!window.Tally?.loadEmbeds) throw new Error('Tally embed API unavailable');
+      window.Tally.loadEmbeds();
+    } catch {
+      showTallyFallback();
+    }
+  };
+
+  const initializeTally = () => {
+    if (isTallySized()) return;
+
+    heightObserver = new MutationObserver(() => {
+      if (!isTallySized()) return;
+      clearTimeout(fallbackTimer);
+      heightObserver.disconnect();
+    });
+    heightObserver.observe(tallyEmbed, { attributes: true, attributeFilter: ['style'] });
+    fallbackTimer = window.setTimeout(showTallyFallback, 30000);
+
+    if (window.Tally) {
+      loadTallyEmbed();
+    } else {
+      const tallyScript = document.createElement('script');
+      tallyScript.src = 'https://tally.so/widgets/embed.js';
+      tallyScript.async = true;
+      tallyScript.onload = loadTallyEmbed;
+      tallyScript.onerror = showTallyFallback;
+      document.head.appendChild(tallyScript);
+    }
+  };
+
+  initializeTally();
+}
 
 if (menuButton && navigation) {
   document.documentElement.classList.add('menu-ready');

@@ -12,6 +12,12 @@ python3 -m http.server 8000
 
 Open `http://localhost:8000`.
 
+## Tests
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
 ## Project structure
 
 - `index.html` — primary page content and accessible structure
@@ -19,6 +25,7 @@ Open `http://localhost:8000`.
 - `investors.html` — responsive investor presentation page
 - `styles.css` — responsive visual system and layout
 - `script.js` — mobile navigation, local launch-brief generation, and the dynamic footer year
+- `tests/` — regression checks for responsive embed behavior
 - `assets/` — all imagery and brand artwork, stored locally
 
 The site has no runtime package dependencies or external fonts. Images and brand assets are stored locally. The lead-capture form is embedded from Tally, and the investor presentation is embedded from SlideServe; both embeds include direct-link fallbacks.

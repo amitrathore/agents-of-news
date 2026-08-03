@@ -187,7 +187,7 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
 .embed-fallback { margin: 14px 0 0; color: rgba(255,255,255,.62); font-size: 12px; }
 .embed-fallback a { color: var(--signal); border-bottom: 1px solid currentColor; font-weight: 700; }
 .builder-section { padding-block: 130px; border-top: 1px solid rgba(255,255,255,.2); background: var(--ink); color: white; }
-.builder-intro { position: sticky; top: 120px; align-self: start; }
+.builder-intro { align-self: start; }
 .builder-intro h2 { max-width: 520px; }
 .builder-intro > p:last-child { max-width: 440px; color: rgba(255,255,255,.62); }
 .brief-form-heading { grid-column: 2; margin-top: 14px; }
@@ -288,7 +288,6 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .enterprise-offer .button { grid-column: 1; }
   .news-contact-art { width: min(78%, 360px); margin-inline: auto; }
   .lead-grid, .builder-grid { grid-template-columns: 1fr; gap: 46px; }
-  .builder-intro { position: static; }
   .brief-form-heading { grid-column: 1; }
   .brief-result { grid-column: 1; }
   .noscript-note { grid-column: 1; }
@@ -312,7 +311,6 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .orbit-two, .node-c { display: none; }
   .brief-form { grid-template-columns: 1fr; padding: 22px; }
   .lead-capture { padding: 22px; }
-  .tally-embed { height: 800px; }
   .investors-main { padding-block: 72px 100px; }
   .investor-deck { box-shadow: 8px 8px 0 var(--coral); }
   .investor-note { align-items: flex-start; flex-direction: column; }
