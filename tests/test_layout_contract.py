@@ -1,5 +1,7 @@
 import re
+import struct
 import unittest
+import zlib
 from pathlib import Path
 
 
@@ -7,6 +9,73 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LayoutContractTests(unittest.TestCase):
+    def test_social_cards_have_complete_open_graph_metadata(self):
+        image_url = "https://www.agentsofnews.com/assets/images/og-agents-of-news.png"
+        expected = {
+            "index.html": (
+                "Turn Your Point of View Into a Newsroom | Agents of News",
+                "Launch an AI-powered journalist, grow a community around what you know, and claim your place in the new news economy.",
+                "https://www.agentsofnews.com/",
+            ),
+            "profiles.html": (
+                "Meet the People Behind the Perspective | Agents of News",
+                "Eight distinct voices turning expertise, curiosity, and cultural context into living AI-powered newsrooms.",
+                "https://www.agentsofnews.com/profiles.html",
+            ),
+            "investors.html": (
+                "The Newsroom Is Becoming a Network | Agents of News",
+                "Explore the opportunity behind Agents of News and the new creator-led news economy for the age of AI.",
+                "https://www.agentsofnews.com/investors.html",
+            ),
+        }
+        for page, (title, description, url) in expected.items():
+            with self.subTest(page=page):
+                head = (ROOT / page).read_text().split("</head>", 1)[0]
+                expected_meta = {
+                    "og:title": title,
+                    "og:description": description,
+                    "og:url": url,
+                    "og:image": image_url,
+                    "og:image:type": "image/png",
+                    "og:image:width": "1200",
+                    "og:image:height": "630",
+                    "twitter:card": "summary_large_image",
+                    "twitter:title": title,
+                    "twitter:description": description,
+                    "twitter:image": image_url,
+                }
+                for key, content in expected_meta.items():
+                    matches = re.findall(
+                        rf'<meta (?:property|name)="{re.escape(key)}" content="([^"]*)">',
+                        head,
+                    )
+                    self.assertEqual(matches, [content], f"{page}: {key}")
+                self.assertEqual(len(re.findall(r'<meta property="og:image:alt" content="[^"]+">', head)), 1)
+                self.assertEqual(len(re.findall(r'<meta name="twitter:image:alt" content="[^"]+">', head)), 1)
+                self.assertEqual(head.count(f'<link rel="canonical" href="{url}">'), 1)
+
+    def test_social_card_has_platform_safe_dimensions(self):
+        image = (ROOT / "assets/images/og-agents-of-news.png").read_bytes()
+        self.assertEqual(image[:8], b"\x89PNG\r\n\x1a\n")
+        width, height = struct.unpack(">II", image[16:24])
+        self.assertEqual((width, height), (1200, 630))
+        self.assertLess(len(image), 5 * 1024 * 1024)
+
+        chunks = []
+        offset = 8
+        while offset < len(image):
+            length = struct.unpack(">I", image[offset:offset + 4])[0]
+            chunk_type = image[offset + 4:offset + 8]
+            chunk_data = image[offset + 8:offset + 8 + length]
+            checksum = struct.unpack(">I", image[offset + 8 + length:offset + 12 + length])[0]
+            self.assertEqual(checksum, zlib.crc32(chunk_type + chunk_data) & 0xFFFFFFFF)
+            chunks.append(chunk_type)
+            offset += 12 + length
+        self.assertEqual(offset, len(image))
+        self.assertEqual(chunks[0], b"IHDR")
+        self.assertIn(b"IDAT", chunks)
+        self.assertEqual(chunks[-1], b"IEND")
+
     def test_builder_intro_does_not_stick_over_the_form(self):
         css = (ROOT / "styles.css").read_text()
         rule = re.search(r"\.builder-intro\s*\{([^}]*)\}", css)
