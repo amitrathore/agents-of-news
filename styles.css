@@ -176,7 +176,7 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
 .news-contact-copy a { border-bottom: 2px solid var(--ink); font-weight: 700; }
 
 .lead-section { padding-block: 130px; background: var(--ink); color: white; }
-.lead-grid, .builder-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 80px; }
+.lead-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 80px; }
 .lead-intro { align-self: start; }
 .lead-intro h2 { max-width: 520px; }
 .lead-intro > p:last-child { max-width: 440px; color: rgba(255,255,255,.62); }
@@ -186,25 +186,6 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
 .tally-embed { display: block; width: 100%; border: 0; background: var(--ink); }
 .embed-fallback { margin: 14px 0 0; color: rgba(255,255,255,.62); font-size: 12px; }
 .embed-fallback a { color: var(--signal); border-bottom: 1px solid currentColor; font-weight: 700; }
-.builder-section { padding-block: 130px; border-top: 1px solid rgba(255,255,255,.2); background: var(--ink); color: white; }
-.builder-intro { align-self: start; }
-.builder-intro h2 { max-width: 520px; }
-.builder-intro > p:last-child { max-width: 440px; color: rgba(255,255,255,.62); }
-.brief-form-heading { grid-column: 2; margin-top: 14px; }
-.brief-form-heading h3 { margin-bottom: 14px; font-size: clamp(30px, 3vw, 42px); }
-.brief-form-heading .eyebrow { margin-bottom: 12px; }
-.brief-form { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 34px; border: 1px solid rgba(255,255,255,.3); }
-.brief-form label { display: grid; gap: 9px; color: var(--signal); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-.brief-form input, .brief-form select, .brief-form textarea { width: 100%; min-height: 52px; padding: 13px 14px; border: 1px solid rgba(255,255,255,.35); border-radius: 0; background: rgba(255,255,255,.06); color: white; font: 16px/1.4 var(--sans); text-transform: none; }
-.brief-form textarea { min-height: 108px; resize: vertical; }
-.brief-form select option { color: var(--ink); }
-.brief-form input::placeholder, .brief-form textarea::placeholder { color: rgba(255,255,255,.4); }
-.brief-form input:focus-visible, .brief-form select:focus-visible, .brief-form textarea:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
-.field-wide { grid-column: 1 / -1; }
-.brief-result { grid-column: 2; padding: 34px; border: 1px solid var(--signal); background: var(--paper); color: var(--ink); }
-.brief-result h3 { margin-bottom: 20px; font-size: 36px; }
-.brief-result pre { overflow-x: auto; margin: 0 0 28px; white-space: pre-wrap; font: 15px/1.65 var(--sans); }
-.noscript-note { grid-column: 2; padding: 18px; border: 1px solid var(--coral); color: white; }
 
 .profiles-main { padding-block: 100px 140px; }
 .profiles-intro { display: grid; grid-template-columns: 1.2fr .8fr; gap: 70px; align-items: end; margin-bottom: 80px; }
@@ -287,10 +268,7 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .enterprise-offer, .news-contact-grid { grid-template-columns: 1fr; gap: 38px; }
   .enterprise-offer .button { grid-column: 1; }
   .news-contact-art { width: min(78%, 360px); margin-inline: auto; }
-  .lead-grid, .builder-grid { grid-template-columns: 1fr; gap: 46px; }
-  .brief-form-heading { grid-column: 1; }
-  .brief-result { grid-column: 1; }
-  .noscript-note { grid-column: 1; }
+  .lead-grid { grid-template-columns: 1fr; gap: 46px; }
   .profiles-intro { grid-template-columns: 1fr; gap: 20px; }
   .investors-intro { grid-template-columns: 1fr; gap: 24px; }
   .profile-entry { grid-template-columns: 180px 1fr; }
@@ -309,12 +287,10 @@ h3 { font-family: var(--serif); font-size: 30px; letter-spacing: -0.025em; }
   .agent-image img { aspect-ratio: auto; object-position: center 32%; }
   .hero-caption { right: -12px; }
   .orbit-two, .node-c { display: none; }
-  .brief-form { grid-template-columns: 1fr; padding: 22px; }
   .lead-capture { padding: 22px; }
   .investors-main { padding-block: 72px 100px; }
   .investor-deck { box-shadow: 8px 8px 0 var(--coral); }
   .investor-note { align-items: flex-start; flex-direction: column; }
-  .field-wide { grid-column: 1; }
   .profile-entry { grid-template-columns: 1fr; padding: 20px; }
 }
 

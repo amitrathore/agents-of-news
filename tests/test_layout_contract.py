@@ -76,12 +76,6 @@ class LayoutContractTests(unittest.TestCase):
         self.assertIn(b"IDAT", chunks)
         self.assertEqual(chunks[-1], b"IEND")
 
-    def test_builder_intro_does_not_stick_over_the_form(self):
-        css = (ROOT / "styles.css").read_text()
-        rule = re.search(r"\.builder-intro\s*\{([^}]*)\}", css)
-        self.assertIsNotNone(rule)
-        self.assertNotIn("position: sticky", rule.group(1))
-
     def test_tally_embed_uses_dynamic_height(self):
         html = (ROOT / "index.html").read_text()
         self.assertIn('data-tally-src="https://tally.so/embed/jarDr9', html)
