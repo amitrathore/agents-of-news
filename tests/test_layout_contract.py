@@ -9,6 +9,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LayoutContractTests(unittest.TestCase):
+    def test_awake_venture_attribution_is_linked_sitewide(self):
+        expected_link = '<a href="https://awake.vc" target="_blank" rel="noopener noreferrer">An Awake Venture</a>'
+        expected_counts = {"index.html": 2, "profiles.html": 1, "investors.html": 2}
+        for page, count in expected_counts.items():
+            with self.subTest(page=page):
+                html = (ROOT / page).read_text()
+                self.assertNotIn("A Fractals venture", html)
+                self.assertEqual(html.count(expected_link), count)
+
     def test_social_cards_have_complete_open_graph_metadata(self):
         image_url = "https://www.agentsofnews.com/assets/images/og-agents-of-news.png"
         expected = {
@@ -104,6 +113,30 @@ class LayoutContractTests(unittest.TestCase):
             script.index("heightObserver.observe", initialize),
             script.index("if (window.Tally)", initialize),
         )
+
+    def test_investor_deck_is_self_hosted_and_downloadable(self):
+        html = (ROOT / "investors.html").read_text()
+        self.assertNotIn("slideserve.com", html.lower())
+        self.assertIn('data-investor-slideshow data-slide-count="14"', html)
+        self.assertIn('assets/presentations/slides/slide-01.png', html)
+        self.assertIn('assets/presentations/agents-of-news-investor-deck.pdf', html)
+        self.assertNotIn('.pptx', html.lower())
+
+        deck = ROOT / "assets/presentations/agents-of-news-investor-deck.pdf"
+        self.assertTrue(deck.is_file())
+        self.assertGreater(deck.stat().st_size, 100_000)
+        self.assertEqual(deck.read_bytes()[:5], b"%PDF-")
+        for slide_number in range(1, 15):
+            slide = ROOT / f"assets/presentations/slides/slide-{slide_number:02d}.png"
+            self.assertTrue(slide.is_file(), slide.name)
+            self.assertGreater(slide.stat().st_size, 10_000)
+
+    def test_investor_slideshow_runtime_has_controls_and_keyboard_support(self):
+        script = (ROOT / "script.js").read_text()
+        self.assertIn("const showSlide", script)
+        self.assertIn("event.key === 'ArrowRight'", script)
+        self.assertIn("requestFullscreen", script)
+        self.assertIn("(nextIndex + slideCount) % slideCount", script)
 
 
 if __name__ == "__main__":
