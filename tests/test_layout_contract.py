@@ -9,6 +9,22 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LayoutContractTests(unittest.TestCase):
+    def test_professional_footer_is_consistent_sitewide(self):
+        expected_links = [
+            "index.html", "index.html#agents", "index.html#economy", "index.html#plans",
+            "index.html#lead", "profiles.html", "mailto:hello@agentsofnews.com",
+            "investors.html", "assets/presentations/agents-of-news-investor-deck.pdf",
+            "https://awake.vc",
+        ]
+        for page in ("index.html", "profiles.html", "investors.html"):
+            with self.subTest(page=page):
+                html = (ROOT / page).read_text()
+                footer = re.search(r'<footer class="site-footer">(.*?)</footer>', html, re.DOTALL).group(1)
+                self.assertIn("Every point of view can become a newsroom.", footer)
+                self.assertIn("All rights reserved.", footer)
+                self.assertEqual(re.findall(r'href="([^"]+)"', footer), expected_links)
+                self.assertIn('href="https://awake.vc" target="_blank" rel="noopener noreferrer">An Awake Venture</a>', footer)
+
     def test_primary_navigation_items_are_consistent_sitewide(self):
         expected_labels = ["News agents", "How you earn", "Plans", "Investors", "Launch yours"]
         expected_hrefs = {
