@@ -9,6 +9,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LayoutContractTests(unittest.TestCase):
+    def test_primary_navigation_items_are_consistent_sitewide(self):
+        expected_labels = ["News agents", "How you earn", "Plans", "Investors", "Launch yours"]
+        expected_hrefs = {
+            "index.html": ["#agents", "#economy", "#plans", "investors.html", "#lead"],
+            "profiles.html": ["index.html#agents", "index.html#economy", "index.html#plans", "investors.html", "index.html#lead"],
+            "investors.html": ["index.html#agents", "index.html#economy", "index.html#plans", "investors.html", "index.html#lead"],
+        }
+        for page, hrefs in expected_hrefs.items():
+            with self.subTest(page=page):
+                html = (ROOT / page).read_text()
+                nav = re.search(r'<nav id="site-nav"[^>]*>(.*?)</nav>', html, re.DOTALL).group(1)
+                links = re.findall(r'<a\s+([^>]*)>(.*?)</a>', nav, re.DOTALL)
+                labels = [re.sub(r'<[^>]+>|&#8599;', '', body).strip() for _, body in links]
+                actual_hrefs = [re.search(r'href="([^"]+)"', attributes).group(1) for attributes, _ in links]
+                self.assertEqual(labels, expected_labels)
+                self.assertEqual(actual_hrefs, hrefs)
+
     def test_awake_venture_attribution_is_linked_sitewide(self):
         expected_link = '<a href="https://awake.vc" target="_blank" rel="noopener noreferrer">An Awake Venture</a>'
         expected_counts = {"index.html": 2, "profiles.html": 1, "investors.html": 2}
